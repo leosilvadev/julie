@@ -8,13 +8,15 @@ import com.purbon.kafka.topology.validation.TopicValidation;
 public class RetentionPeriodValidation implements TopicValidation {
 
   @Override
-  public void valid(Topic topic, Configuration globalConfig) throws ValidationException {
-    final Long topicRetention = getRetentionOrZero(topic);
-    if (topicRetention > globalConfig.getTopologyValidationMaxRetentionPeriod()) {
-      String msg =
+  public void valid(final Topic topic, final Configuration globalConfig) throws ValidationException {
+    final var topicRetention = getRetentionOrZero(topic);
+    final var maxRetentionPeriod = globalConfig.getTopologyValidationMaxRetentionPeriod();
+    final var topicMatchingPattern = globalConfig.getTopologyValidationTopicMatchingPattern();
+    if (maxRetentionPeriod > 0 && topicMatchingPattern.matcher(topic.getName()).matches() && topicRetention > maxRetentionPeriod) {
+      final var msg =
           String.format(
               "Topic %s exceeds the max retention period defined. Topic retention: %s, max retention allowed: %s",
-              topic, topicRetention, globalConfig.getTopologyValidationMaxRetentionPeriod());
+              topic, topicRetention, maxRetentionPeriod);
       throw new ValidationException(msg);
     }
   }
