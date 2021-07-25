@@ -5,7 +5,6 @@ on:
       - 'v3.*.*'
 jobs:
   ktb_docker_build:
-    if: github.repository == 'kafka-ops/julie'
     name: Build docker image
     runs-on: ubuntu-latest
     steps:

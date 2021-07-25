@@ -1,5 +1,6 @@
 package com.purbon.kafka.topology.validation.topic;
 
+import com.purbon.kafka.topology.Configuration;
 import com.purbon.kafka.topology.exceptions.ValidationException;
 import com.purbon.kafka.topology.model.Topic;
 import com.purbon.kafka.topology.validation.TopicValidation;
@@ -7,7 +8,7 @@ import com.purbon.kafka.topology.validation.TopicValidation;
 public class PartitionNumberValidation implements TopicValidation {
 
   @Override
-  public void valid(Topic topic) throws ValidationException {
+  public void valid(Topic topic, Configuration globalConfig) throws ValidationException {
     if (topic.partitionsCountOptional().isPresent() && topic.partitionsCount() < 3) {
       String msg =
           String.format(

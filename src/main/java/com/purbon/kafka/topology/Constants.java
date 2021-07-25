@@ -96,4 +96,10 @@ public class Constants {
 
   public static final String TOPOLOGY_VALIDATIONS_TOPIC_NAME_REGEXP =
       "topology.validations.topic.name.regexp";
+
+  public static final String TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG =
+      "topology.validation.max_retention_period";
+
+  public static final String TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG =
+          "topology.validation.topic_matching_pattern";
 }

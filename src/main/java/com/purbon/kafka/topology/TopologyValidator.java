@@ -61,7 +61,7 @@ public class TopologyValidator {
                         .map(
                             validation -> {
                               try {
-                                validation.valid(topic);
+                                validation.valid(topic, config);
                                 return Either.Left(true);
                               } catch (ValidationException ex) {
                                 return Either.Right(ex);

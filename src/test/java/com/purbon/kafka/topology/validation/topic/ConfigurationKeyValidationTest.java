@@ -1,5 +1,6 @@
 package com.purbon.kafka.topology.validation.topic;
 
+import com.purbon.kafka.topology.Configuration;
 import com.purbon.kafka.topology.exceptions.ValidationException;
 import com.purbon.kafka.topology.model.Impl.TopicImpl;
 import com.purbon.kafka.topology.model.Topic;
@@ -17,7 +18,7 @@ public class ConfigurationKeyValidationTest {
     Topic topic = new TopicImpl("topic", config);
 
     ConfigurationKeyValidation validation = new ConfigurationKeyValidation();
-    validation.valid(topic);
+    validation.valid(topic, new Configuration());
   }
 
   @Test
@@ -27,7 +28,7 @@ public class ConfigurationKeyValidationTest {
     Topic topic = new TopicImpl("topic", config);
 
     ConfigurationKeyValidation validation = new ConfigurationKeyValidation();
-    validation.valid(topic);
+    validation.valid(topic, new Configuration());
   }
 
   @Test
@@ -37,6 +38,6 @@ public class ConfigurationKeyValidationTest {
     Topic topic = new TopicImpl("topic", config);
 
     ConfigurationKeyValidation validation = new ConfigurationKeyValidation();
-    validation.valid(topic);
+    validation.valid(topic, new Configuration());
   }
 }

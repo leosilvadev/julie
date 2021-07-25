@@ -14,6 +14,7 @@ import com.typesafe.config.ConfigFactory;
 import java.io.File;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.kafka.clients.admin.AdminClientConfig;
@@ -220,6 +221,20 @@ public class Configuration {
 
   public String getAccessControlClassName() {
     return config.getString(ACCESS_CONTROL_IMPLEMENTATION_CLASS);
+  }
+
+  public Long getTopologyValidationMaxRetentionPeriod() {
+    if (hasProperty(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)) {
+      return config.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG);
+    }
+    return 0L;
+  }
+
+  public Pattern getTopologyValidationTopicMatchingPattern() {
+    if (hasProperty(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)) {
+      return Pattern.compile(config.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG));
+    }
+    return Pattern.compile(".*");
   }
 
   public String getStateProcessorImplementationClassName() {
