@@ -222,6 +222,13 @@ public class Configuration {
     return config.getString(ACCESS_CONTROL_IMPLEMENTATION_CLASS);
   }
 
+  public Long getTopologyValidationMaxRetentionPeriod() {
+    if (hasProperty(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)) {
+      return config.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG);
+    }
+    return Long.MAX_VALUE;
+  }
+
   public String getStateProcessorImplementationClassName() {
     return config.getString(STATE_PROCESSOR_IMPLEMENTATION_CLASS);
   }

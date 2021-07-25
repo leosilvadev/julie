@@ -2,6 +2,7 @@ package com.purbon.kafka.topology.validation.topic;
 
 import static com.purbon.kafka.topology.Constants.TOPOLOGY_VALIDATIONS_TOPIC_NAME_REGEXP;
 
+import com.purbon.kafka.topology.Configuration;
 import com.purbon.kafka.topology.exceptions.ConfigurationException;
 import com.purbon.kafka.topology.exceptions.ValidationException;
 import com.purbon.kafka.topology.model.Topic;
@@ -32,7 +33,7 @@ public class TopicNameRegexValidation implements TopicValidation {
   }
 
   @Override
-  public void valid(Topic topic) throws ValidationException {
+  public void valid(Topic topic, Configuration globalConfig) throws ValidationException {
     LOGGER.trace(String.format("Applying Topic Name Regex Validation [%s]", topicNamePattern));
 
     if (!topic.getName().matches(topicNamePattern)) {

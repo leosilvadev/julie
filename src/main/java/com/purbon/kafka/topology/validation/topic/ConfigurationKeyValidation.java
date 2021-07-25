@@ -1,5 +1,6 @@
 package com.purbon.kafka.topology.validation.topic;
 
+import com.purbon.kafka.topology.Configuration;
 import com.purbon.kafka.topology.exceptions.ValidationException;
 import com.purbon.kafka.topology.model.Impl.TopicImpl;
 import com.purbon.kafka.topology.model.Topic;
@@ -19,7 +20,7 @@ public class ConfigurationKeyValidation implements TopicValidation {
   private static final Logger LOGGER = LogManager.getLogger(ConfigurationKeyValidation.class);
 
   @Override
-  public void valid(Topic topic) throws ValidationException {
+  public void valid(Topic topic, Configuration globalConfig) throws ValidationException {
     Field[] fields = TopicConfig.class.getDeclaredFields();
     TopicConfig config = new TopicConfig();
     Map<String, String> topicConfig = getTopicConfig(topic);
