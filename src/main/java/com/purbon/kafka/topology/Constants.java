@@ -101,5 +101,5 @@ public class Constants {
       "topology.validation.max_retention_period";
 
   public static final String TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG =
-          "topology.validation.topic_matching_pattern";
+      "topology.validation.topic_matching_pattern";
 }

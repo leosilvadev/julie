@@ -1,5 +1,9 @@
 package com.purbon.kafka.topology.validation.topic;
 
+import static com.purbon.kafka.topology.Constants.TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG;
+import static com.purbon.kafka.topology.Constants.TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG;
+import static org.mockito.Mockito.when;
+
 import com.purbon.kafka.topology.Configuration;
 import com.purbon.kafka.topology.exceptions.ValidationException;
 import com.purbon.kafka.topology.model.Impl.TopicImpl;
@@ -7,10 +11,6 @@ import com.typesafe.config.Config;
 import java.util.HashMap;
 import org.junit.Test;
 import org.mockito.Mockito;
-
-import static com.purbon.kafka.topology.Constants.TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG;
-import static com.purbon.kafka.topology.Constants.TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG;
-import static org.mockito.Mockito.when;
 
 public class RetentionPeriodValidationTest {
 
@@ -41,9 +41,11 @@ public class RetentionPeriodValidationTest {
     var configMock = Mockito.mock(Config.class);
 
     when(configMock.hasPath(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(true);
-    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(1000 * 60 * 60 * 24L);
+    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG))
+        .thenReturn(1000 * 60 * 60 * 24L);
     when(configMock.hasPath(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn(true);
-    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn("context\\.project\\.users_.*");
+    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG))
+        .thenReturn("context\\.project\\.users_.*");
 
     var globalConfig = new Configuration(new HashMap<>(), configMock);
 
@@ -52,7 +54,8 @@ public class RetentionPeriodValidationTest {
   }
 
   @Test
-  public void testKoConfigValuesWhenTopicRetentionIsHigherThanTheLimitButTopicMatchingPatternDoesNotMatchTheTopic()
+  public void
+      testKoConfigValuesWhenTopicRetentionIsHigherThanTheLimitButTopicMatchingPatternDoesNotMatchTheTopic()
           throws ValidationException {
     var config = new HashMap<String, String>();
     config.put("delete.retention.ms", String.valueOf(ONE_HOUR * 48));
@@ -61,9 +64,11 @@ public class RetentionPeriodValidationTest {
     var configMock = Mockito.mock(Config.class);
 
     when(configMock.hasPath(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(true);
-    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(1000 * 60 * 60 * 24L);
+    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG))
+        .thenReturn(1000 * 60 * 60 * 24L);
     when(configMock.hasPath(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn(true);
-    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn("context\\.project\\.users_.*");
+    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG))
+        .thenReturn("context\\.project\\.users_.*");
 
     var globalConfig = new Configuration(new HashMap<>(), configMock);
 
@@ -73,7 +78,7 @@ public class RetentionPeriodValidationTest {
 
   @Test(expected = ValidationException.class)
   public void testKoConfigValuesWhenTopicRetentionIsHigherThanTheLimit()
-          throws ValidationException {
+      throws ValidationException {
     var config = new HashMap<String, String>();
     config.put("delete.retention.ms", String.valueOf(ONE_HOUR * 48));
 
@@ -81,9 +86,11 @@ public class RetentionPeriodValidationTest {
     var configMock = Mockito.mock(Config.class);
 
     when(configMock.hasPath(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(true);
-    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG)).thenReturn(1000 * 60 * 60 * 24L);
+    when(configMock.getLong(TOPOLOGY_VALIDATION_MAX_RETENTION_PERIOD_CONFIG))
+        .thenReturn(1000 * 60 * 60 * 24L);
     when(configMock.hasPath(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn(true);
-    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG)).thenReturn("context\\.project\\.users_.*");
+    when(configMock.getString(TOPOLOGY_VALIDATION_TOPIC_MATCHING_PATTERN_CONFIG))
+        .thenReturn("context\\.project\\.users_.*");
 
     var globalConfig = new Configuration(new HashMap<>(), configMock);
 
