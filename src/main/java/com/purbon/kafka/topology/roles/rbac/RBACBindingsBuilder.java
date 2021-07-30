@@ -13,6 +13,7 @@ import com.purbon.kafka.topology.model.users.Connector;
 import com.purbon.kafka.topology.model.users.Consumer;
 import com.purbon.kafka.topology.model.users.KSqlApp;
 import com.purbon.kafka.topology.model.users.Producer;
+import com.purbon.kafka.topology.model.users.platform.AKHQInstance;
 import com.purbon.kafka.topology.model.users.platform.KsqlServerInstance;
 import com.purbon.kafka.topology.model.users.platform.SchemaRegistryInstance;
 import com.purbon.kafka.topology.roles.TopologyAclBinding;
@@ -190,6 +191,12 @@ public class RBACBindingsBuilder implements BindingsBuilderProvider {
   public List<TopologyAclBinding> buildBindingsForControlCenter(String principal, String appId) {
     TopologyAclBinding binding = apiClient.bind(principal, SYSTEM_ADMIN).forControlCenter().apply();
     return Collections.singletonList(binding);
+  }
+
+  @Override
+  public List<TopologyAclBinding> buildBindingsForAKHQ(AKHQInstance akhq) {
+    // TODO: IMPLEMENT RBAC BINDINGS FOR AKHQ
+    throw new UnsupportedOperationException("AKHQ Bindings for RBAC are not yet available");
   }
 
   @Override

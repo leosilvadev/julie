@@ -10,6 +10,7 @@ import com.purbon.kafka.topology.model.users.Connector;
 import com.purbon.kafka.topology.model.users.Consumer;
 import com.purbon.kafka.topology.model.users.KSqlApp;
 import com.purbon.kafka.topology.model.users.Producer;
+import com.purbon.kafka.topology.model.users.platform.AKHQInstance;
 import com.purbon.kafka.topology.model.users.platform.KsqlServerInstance;
 import com.purbon.kafka.topology.model.users.platform.SchemaRegistryInstance;
 import com.purbon.kafka.topology.roles.TopologyAclBinding;
@@ -124,6 +125,11 @@ public class AclsBindingsBuilder implements BindingsBuilderProvider {
   }
 
   @Override
+  public List<TopologyAclBinding> buildBindingsForAKHQ(final AKHQInstance akhq) {
+    return toList(akhqStream(akhq));
+  }
+
+  @Override
   public Collection<TopologyAclBinding> buildBindingsForKSqlServer(KsqlServerInstance ksqlServer) {
     return toList(ksqlServerStream(ksqlServer));
   }
@@ -220,6 +226,14 @@ public class AclsBindingsBuilder implements BindingsBuilderProvider {
                         principal, schemaRegistry.topicString(), PatternType.LITERAL, aclOperation))
             .collect(Collectors.toList());
     return bindings.stream();
+  }
+
+  private Stream<AclBinding> akhqStream(final AKHQInstance akhq) {
+    return Stream.of(
+        buildTopicLevelAcl(
+            akhq.getPrincipal(), akhq.getTopic(), PatternType.LITERAL, AclOperation.ALL),
+        buildGroupLevelAcl(
+            akhq.getPrincipal(), akhq.getGroup(), PatternType.LITERAL, AclOperation.ALL));
   }
 
   private Stream<AclBinding> controlCenterStream(String principal, String appId) {

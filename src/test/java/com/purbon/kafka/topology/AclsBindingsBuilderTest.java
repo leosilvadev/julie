@@ -10,13 +10,10 @@ import com.purbon.kafka.topology.model.users.Connector;
 import com.purbon.kafka.topology.model.users.Consumer;
 import com.purbon.kafka.topology.model.users.KStream;
 import com.purbon.kafka.topology.model.users.Producer;
+import com.purbon.kafka.topology.model.users.platform.AKHQInstance;
 import com.purbon.kafka.topology.roles.TopologyAclBinding;
 import com.purbon.kafka.topology.roles.acls.AclsBindingsBuilder;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import org.apache.kafka.common.acl.AccessControlEntry;
 import org.apache.kafka.common.acl.AclBinding;
 import org.apache.kafka.common.acl.AclOperation;
@@ -197,6 +194,26 @@ public class AclsBindingsBuilderTest {
     shouldContainBindings.add(
         buildTopicLevelAcl(
             connector.getPrincipal(), connectorReadTopic, PatternType.LITERAL, AclOperation.READ));
+
+    assertThat(bindings).containsExactlyInAnyOrderElementsOf(shouldContainBindings);
+  }
+
+  @Test
+  public void testAKHQAcls() {
+    AKHQInstance akhq = new AKHQInstance();
+    akhq.setTopic("myteam.*");
+    akhq.setGroup("*");
+    akhq.setPrincipal("User:foo");
+
+    List<TopologyAclBinding> bindings = builder.buildBindingsForAKHQ(akhq);
+
+    List<TopologyAclBinding> shouldContainBindings = new ArrayList<>();
+    shouldContainBindings.add(
+        buildTopicLevelAcl(
+            akhq.getPrincipal(), akhq.getTopic(), PatternType.LITERAL, AclOperation.ALL));
+    shouldContainBindings.add(
+        buildGroupLevelAcl(
+            akhq.getPrincipal(), akhq.getGroup(), PatternType.LITERAL, AclOperation.ALL));
 
     assertThat(bindings).containsExactlyInAnyOrderElementsOf(shouldContainBindings);
   }

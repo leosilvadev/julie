@@ -6,6 +6,7 @@ import com.purbon.kafka.topology.model.users.Connector;
 import com.purbon.kafka.topology.model.users.Consumer;
 import com.purbon.kafka.topology.model.users.KSqlApp;
 import com.purbon.kafka.topology.model.users.Producer;
+import com.purbon.kafka.topology.model.users.platform.AKHQInstance;
 import com.purbon.kafka.topology.model.users.platform.KsqlServerInstance;
 import com.purbon.kafka.topology.model.users.platform.SchemaRegistryInstance;
 import com.purbon.kafka.topology.roles.TopologyAclBinding;
@@ -37,6 +38,8 @@ public interface BindingsBuilderProvider {
       throws ConfigurationException;
 
   List<TopologyAclBinding> buildBindingsForControlCenter(String principal, String appId);
+
+  List<TopologyAclBinding> buildBindingsForAKHQ(AKHQInstance akhq);
 
   default List<TopologyAclBinding> setSchemaAuthorization(String principal, List<String> subjects) {
     return Collections.emptyList();

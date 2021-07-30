@@ -381,6 +381,29 @@ public class AccessControlManagerTest {
   }
 
   @Test
+  public void newAKHQACLCreation() throws IOException {
+    Project project = new ProjectImpl();
+    Topology topology = new TopologyImpl();
+    topology.addProject(project);
+
+    Platform platform = new Platform();
+    AKHQ akhq = new AKHQ();
+    AKHQInstance instance = new AKHQInstance();
+    instance.setPrincipal("User:foo");
+    instance.setTopic("myteam.*");
+    instance.setGroup("*");
+    akhq.setInstances(singletonList(instance));
+    platform.setAkhq(akhq);
+    topology.setPlatform(platform);
+
+    accessControlManager.apply(topology, plan);
+
+    doReturn(new ArrayList<TopologyAclBinding>()).when(aclsBuilder).buildBindingsForAKHQ(instance);
+
+    verify(aclsBuilder, times(1)).buildBindingsForAKHQ(instance);
+  }
+
+  @Test
   public void newKafkaClusterRBACCreation() throws IOException {
     Project project = new ProjectImpl();
     Topology topology = new TopologyImpl();
